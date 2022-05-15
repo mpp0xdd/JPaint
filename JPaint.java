@@ -9,7 +9,6 @@ public class JPaint extends JFrame {
   private JPaint() {
     super("JPaint");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setResizable(false);
 
     JCanvas canvas = new JCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     add(canvas);

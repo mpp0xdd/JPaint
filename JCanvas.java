@@ -4,6 +4,7 @@ import java.awt.geom.Line2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.Image;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 
@@ -13,6 +14,8 @@ public class JCanvas extends JPanel implements MouseListener, MouseMotionListene
   private boolean isDrawable = false;
   private float x1 = 0f, y1 = 0f;
   private float x2 = 0f, y2 = 0f;
+
+  private Image image = null;
 
   public JCanvas(int width, int height) {
     Dimension size = new Dimension(width, height);
@@ -64,12 +67,25 @@ public class JCanvas extends JPanel implements MouseListener, MouseMotionListene
 
   @Override
   public void paintComponent(Graphics g) {
-    if(!isDrawable) {
-      return;
+    super.paintComponent(g);
+
+    final int currentWidth = getWidth();
+    final int currentHeight = getHeight();
+
+    if(image == null) {
+      image = createImage(currentWidth, currentHeight);
+    } else if(currentWidth != image.getWidth(this) || currentHeight != image.getHeight(this)) {
+      Image newImage = createImage(currentWidth, currentHeight);
+      newImage.getGraphics().drawImage(image, 0, 0, this);
+      image = newImage;
+      isDrawable = false;
     }
 
-    paintbrush.drawLine((Graphics2D)g, x1, y1, x2, y2);
-    x1 = x2;
-    y1 = y2;
+    if(isDrawable) {
+      paintbrush.drawLine((Graphics2D)image.getGraphics(), x1, y1, x2, y2);
+      x1 = x2;
+      y1 = y2;
+    }
+    g.drawImage(image, 0, 0, this);
   }
 }
