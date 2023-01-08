@@ -1,9 +1,8 @@
 import javax.swing.JFrame;
 
-
 public class JPaint extends JFrame {
 
-  private static final int CANVAS_WIDTH  = 640;
+  private static final int CANVAS_WIDTH = 640;
   private static final int CANVAS_HEIGHT = 480;
 
   private JPaint() {

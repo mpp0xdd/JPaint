@@ -1,13 +1,11 @@
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.Image;
 import javax.swing.JPanel;
-import java.awt.Dimension;
-
 
 public class JCanvas extends JPanel implements MouseListener, MouseMotionListener {
   private Paintbrush paintbrush = new Paintbrush();
@@ -28,36 +26,38 @@ public class JCanvas extends JPanel implements MouseListener, MouseMotionListene
 
   @Override
   public void mousePressed(MouseEvent e) {
-    x1 = (float)e.getX();
-    y1 = (float)e.getY();
+    x1 = (float) e.getX();
+    y1 = (float) e.getY();
     isDrawable = true;
 
-//    System.err.println("mousePressed() is running ...");
+    // System.err.println("mousePressed() is running ...");
   }
 
   @Override
   public void mouseClicked(MouseEvent e) {
-    x2 = (float)e.getX();
-    y2 = (float)e.getY();
+    x2 = (float) e.getX();
+    y2 = (float) e.getY();
     repaint();
 
-//    System.err.println("mouseClicked() is running ...");
+    // System.err.println("mouseClicked() is running ...");
   }
 
   @Override
   public void mouseDragged(MouseEvent e) {
-    x2 = (float)e.getX();
-    y2 = (float)e.getY();
+    x2 = (float) e.getX();
+    y2 = (float) e.getY();
     repaint();
 
-//    System.err.println("mouseDragged() is running ...");
+    // System.err.println("mouseDragged() is running ...");
   }
 
   // Implement MouseListener
   @Override
   public void mouseEntered(MouseEvent e) {}
+
   @Override
   public void mouseExited(MouseEvent e) {}
+
   @Override
   public void mouseReleased(MouseEvent e) {}
 
@@ -72,17 +72,17 @@ public class JCanvas extends JPanel implements MouseListener, MouseMotionListene
     final int currentWidth = getWidth();
     final int currentHeight = getHeight();
 
-    if(image == null) {
+    if (image == null) {
       image = createImage(currentWidth, currentHeight);
-    } else if(currentWidth != image.getWidth(this) || currentHeight != image.getHeight(this)) {
+    } else if (currentWidth != image.getWidth(this) || currentHeight != image.getHeight(this)) {
       Image newImage = createImage(currentWidth, currentHeight);
       newImage.getGraphics().drawImage(image, 0, 0, this);
       image = newImage;
       isDrawable = false;
     }
 
-    if(isDrawable) {
-      paintbrush.drawLine((Graphics2D)image.getGraphics(), x1, y1, x2, y2);
+    if (isDrawable) {
+      paintbrush.drawLine((Graphics2D) image.getGraphics(), x1, y1, x2, y2);
       x1 = x2;
       y1 = y2;
     }
